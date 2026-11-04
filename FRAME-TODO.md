@@ -77,10 +77,19 @@ lives there permanently — never in a scratchpad.** See the warning at the top 
 
 ## Known issues / next steps
 
-- **Félix's real homework word list not yet ingested.** The user is preparing it. When it
-  arrives: add the words to `felixSpelling.themes` in `family-data.js`, generate audio for any
-  new ones with `scripts/gen-reading-audio.sh "<word>" <slug>` (check for accent-slug collisions
-  against the existing 1135-entry map first), add each to `CLIPS` in `js/reading.js`.
+- **Félix's real spelling lists are in, Lists 22-24 are missing.** Transcribed from his class's
+  "Mes listes de mots" worksheet PDF (Créations Carotine) into `FAMILY.felixWordLists` in
+  `family-data.js` — Lists 1-21 and 25-30, 381 total words. Lists 22-24 are absent from the
+  source PDF (a page was duplicated instead of containing them) — re-send those pages when
+  available and add them to the array in the same `{ n, rule, words }` shape; the auto-clamping
+  in `felixListForDate()` means nothing breaks in the meantime, it just reuses the nearest list
+  it has once the real rotation reaches that gap (months away from today).
+- **"Commencer les devoirs" is now a real listen-and-type spelling quiz for Félix.** Plays each
+  word's audio, he types it on an on-screen French keyboard, optional hint (first letter + count,
+  doesn't affect score), right/wrong per word, final score screen with missed words listed. Picks
+  his current week's list automatically (anchored: List 8's week started Monday 2026-11-02, test
+  Friday 2026-11-06). Clara's existing letters-mode slider-scrub review is unchanged. See
+  `dashboard/CLAUDE.md`'s "Félix's real spelling lists" section for the full mechanism.
 - **No RTC battery — clock resets on every power loss.** Breaks anything date-relative. The
   manual fix command previously documented here was **wrong and set the clock 3-4 hours fast**
   — see the corrected command and the full explanation in `dashboard/CLAUDE.md`'s "No RTC

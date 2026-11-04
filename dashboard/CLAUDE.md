@@ -54,13 +54,12 @@ uninstall/reinstall and lose the frame's saved Home-app setting.
 - `js/reading.js` (`window.Reading`) — plays pre-recorded French audio clips for reading
   practice. **Not Web Speech API** — see "No TTS in this WebView" below.
 - `js/homework.js` (`window.Homework`) — full-screen "Commencer les devoirs" review, launched
-  from a button in `kid-view.js` via `App.sheet` (`.sheet--homework` full-bleed variant). A
-  slider scrubber under the current word: for Clara (`mode: 'letters'`) dragging across each
-  letter plays that letter's phonetic sound from `public/audio/fr-letters/<letter>.mp3`
-  (sounding-out, not the whole word); for Félix (`mode: 'scrub'`) the slider scrubs the
-  position of the whole-word clip from `js/reading.js`'s `CLIPS` map, like a real audio
-  scrubber. Word lists come from `FAMILY.claraPhonics` / `FAMILY.felixSpelling.themes`
-  (flattened), not the daily "mot du jour" picker.
+  from a button in `kid-view.js` via `App.sheet` (`.sheet--homework` full-bleed variant). Three
+  modes: `'letters'` (Clara) and `'scrub'` are a slider-scrubbing word browser (letter-sound
+  sounding-out for Clara via `public/audio/fr-letters/<letter>.mp3`, or whole-word audio
+  scrubbing); `'quiz'` (Félix, the one actually wired up in `views/felix.js`) is a real
+  listen-and-type spelling quiz — see "Félix's spelling lists" below. Word lists come from
+  `FAMILY.claraPhonics` / `FAMILY.felixListForDate().words`, not the daily "mot du jour" picker.
 - `js/bus-alarm.js` — `App.soundVolume` (persisted) + a Web Audio beep helper (`App.beep`,
   `BusAlarm.ring`), not an `<audio>` clip.
 - `js/outfit.js` (`window.Outfit`) — "what to wear today" widget for the kid views: reads live
@@ -73,6 +72,29 @@ uninstall/reinstall and lose the frame's saved Home-app setting.
   `kiosk/README.md` for the generic (upstream) kiosk mechanics: bundled-site mode, boot-into-kiosk,
   navigation gestures, etc. That doc is shared with every other device using this kiosk and isn't
   family-specific — don't duplicate it here, extend it there if the mechanism itself changes.
+
+## Félix's real spelling lists and the listen-and-type quiz
+
+Félix's school sends home a "Mes listes de mots" worksheet packet (Créations Carotine) — one
+numbered list of ~12-18 words per week, each with a Friday spelling test. `family-data.js`'s
+`felixWordLists` array holds every list transcribed from that PDF (currently Lists 1-21 and
+25-30 — **Lists 22-24 are missing**, a page in the source PDF was duplicated instead of
+containing them; add them to the array when the real pages are available, same `{ n, rule,
+words }` shape).
+
+`FAMILY.felixListForDate(now)` picks the right list for "this week" from a fixed anchor —
+`FELIX_LIST8_MONDAY = new Date(2026, 10, 2)` (the Monday that started List 8's week, test Friday
+2026-11-06) — counting whole weeks forward/back from there. If the computed list number falls
+outside the transcribed range (before List 1, in the 22-24 gap, or past List 30), it clamps to
+the nearest list that exists rather than showing nothing. `FAMILY.felixTestDate(now)` returns
+that week's Friday, for display ("Test vendredi 6").
+
+The quiz itself (`js/homework.js`'s `'quiz'` mode, used only by Félix) plays each word's audio
+automatically, Félix types it on an on-screen French keyboard (`KEY_ROWS` in homework.js — AZERTY
+letter rows plus the accented-letter row à/â/ê/î/ô/û/ç/œ), can ask for a hint (first letter +
+letter count — doesn't affect scoring, just tracked per word), and sees right/wrong per word plus
+a final score screen with a list of missed words. Designed so he can run through the full current
+list once a day, every day until Friday, not just once.
 
 ## Hard-won facts about this specific frame
 
@@ -131,9 +153,9 @@ uninstall/reinstall and lose the frame's saved Home-app setting.
   naive slugify of accented words can collide (e.g. "là"/"la", "où"/"ou", "sûr"/"sur" — the accent
   is lost in the slug). Always check for duplicate slug values before generating audio for a new
   word; append `-v2` to disambiguate if a collision is unavoidable. `CLIPS`/the audio folder
-  currently cover all 1135 words across `wordBank`/`felixSpelling`/`claraPhonics`. Adding new
-  words later (e.g. Félix's real homework list) means regenerating just the delta — don't redo
-  the whole set.
+  currently cover all 1365 words across `wordBank`/`claraPhonics`/`felixWordLists`. Adding new
+  words later (e.g. Félix's Lists 22-24 once available) means regenerating just the delta —
+  don't redo the whole set.
 - **`scripts/gen-letter-audio.sh`** — generates the 26 French phonetic letter-sound clips
   (`public/audio/fr-letters/<letter>.mp3`) for Clara's letters-mode homework scrubber
   (`homework.js`). Phonetic sounds, not alphabet names: "beu" for B, "keu" for C, not "bé"/"cé".

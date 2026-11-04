@@ -115,6 +115,53 @@
 }
 .hw-btn:active { transform: scale(.97); }
 .hw-btn--ghost { background: var(--paper-2); color: var(--ink); }
+.hw-btn--big { font-size: 22px; padding: 0 44px; }
+
+/* quiz mode (Félix: listen + type + score) — wider sheet to fit the keyboard */
+.sheet--homework-quiz { width: 96vw; max-width: 1100px; }
+.hw--quiz { padding: 32px 36px 28px; gap: 16px; }
+
+.hw-quiz-replay {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: var(--c, var(--ink)); color: var(--c-ink, #fff);
+  display: grid; place-items: center;
+}
+.hw-quiz-replay:active { transform: scale(.95); }
+
+.hw-typed {
+  min-height: 64px; min-width: 320px; padding: 10px 24px;
+  background: var(--paper); border-radius: var(--r-s);
+  font-family: var(--serif); font-size: 36px; letter-spacing: 1px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hw-typed-ph { color: var(--mute); font-size: 20px; font-family: var(--sans); }
+.hw-hint { color: var(--mute); font-weight: 700; font-size: 18px; }
+
+.hw-quiz-actions { display: flex; gap: 10px; }
+
+.hw-kbd { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 760px; }
+.hw-kbd-row { display: flex; gap: 6px; justify-content: center; }
+.hw-key {
+  flex: 1; min-width: 0; max-width: 64px; height: 56px; border-radius: 10px;
+  background: var(--paper); font-weight: 700; font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hw-key:active { transform: scale(.94); background: var(--paper-2); }
+.hw-key--wide { max-width: 88px; }
+.hw-key--space { max-width: 220px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+.hw-result { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 0; }
+.hw-result .i { border-radius: 50%; padding: 14px; }
+.hw-result.is-ok .i { color: #fff; background: var(--ok); }
+.hw-result.is-no .i { color: #fff; background: var(--alert); }
+.hw-result-word { font-family: var(--serif); font-size: 44px; }
+.hw-result-sub { color: var(--mute); font-size: 18px; }
+
+.hw--score { gap: 14px; padding-top: 56px; }
+.hw-score-big { font-size: 96px; font-weight: 800; font-stretch: 62%; font-variant-numeric: tabular-nums; }
+.hw-score-pct { font-size: 24px; color: var(--mute); font-weight: 700; margin-top: -14px; }
+.hw-score-missed { font-size: 19px; text-align: center; max-width: 560px; }
+.hw-score-missed--perfect { font-size: 26px; font-weight: 800; }
 
 /* task picker sheet */
 .kd-menu { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }

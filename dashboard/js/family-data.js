@@ -40,22 +40,70 @@ window.FAMILY = (function () {
     { name: 'Rentrée scolaire', emoji: '🎒', month: 9, day: 2 }
   ];
 
-  // ---------------------------------------------------------------- Félix: spelling practice
-  var felixSpelling = {
-    themes: [
-      { theme: 'École', words: ['école', 'maître', 'maîtresse', 'camarade', 'devoir', 'leçon', 'crayon', 'cahier', 'récréation', 'classe'] },
-      { theme: 'Maison et famille', words: ['maison', 'famille', 'frère', 'sœur', 'cousin', 'grand-père', 'grand-mère', 'voisin', 'chambre', 'cuisine'] },
-      { theme: 'Nature et saisons', words: ['automne', 'hiver', 'printemps', 'été', 'nuage', 'orage', 'forêt', 'rivière', 'montagne', 'étoile'] },
-      { theme: 'Nourriture', words: ['déjeuner', 'dîner', 'souper', 'fromage', 'légume', 'fruit', 'pomme', 'fraise', 'citrouille', 'biscuit'] },
-      { theme: 'Mots courants', words: [
-        'seigneur', 'messieurs', 'calme', 'voudrais', 'heureux', 'prenez', 'mariage', 'voit', 'parents', 'dedans',
-        'entrer', 'lit', 'serais', 'sale', 'sûrement', 'ordre', 'souvent', 'essayé', 'peuvent', 'visage',
-        'bout', 'changé', 'sérieux', 'inquiète', 'ferais', 'début', 'espèce', 'acheter', 'continue', 'sort',
-        'faim', 'long', 'voyage', 'message', 'sorte', 'reçu', 'patron', 'rapport', 'apprendre', 'commencé',
-        'sauver', 'seconde', 'pensez', 'allô', 'ailleurs', 'agent', 'froid', 'seras'
-      ] }
-    ]
-  };
+  // ---------------------------------------------------------------- Félix: real school spelling
+  // lists (transcribed from his class's "Mes listes de mots" worksheets — Créations Carotine).
+  // One list per week, each with a Friday spelling test. List 22-24 are missing from the source
+  // PDF (a page was duplicated instead of containing them) — add them here when available.
+  var felixWordLists = [
+    { n: 1, rule: 'Des mots utiles et fréquents', words: ['assez', 'bienvenu', 'rien', 'aujourd\'hui', 'dès', 'tant', 'aussitôt', 'maintenant', 'tantôt', 'bien', 'parce que', 'tôt', 'bientôt', 'plutôt'] },
+    { n: 2, rule: 'Des mots utiles', words: ['bonhomme', 'cour', 'papier', 'bureau', 'femme', 'plan', 'cause', 'homme', 'prix', 'chacun', 'jumeau', 'tour', 'choix', 'métier'] },
+    { n: 3, rule: 'Des mots dont le -e permet de faire sonner la consonne', words: ['article', 'manche', 'pile', 'diurne', 'mine', 'rapide', 'fleuve', 'monstre', 'timide', 'groupe', 'moule', 'machine', 'nocturne'] },
+    { n: 4, rule: 'Des mots dont le -e final suivi d\'une consonne fait le son è', words: ['avant-hier', 'naturel', 'sec', 'cercle', 'perdre', 'service', 'fier', 'perte', 'ver', 'hier', 'personne', 'verre', 'lecteur', 'presque'] },
+    { n: 5, rule: 'Des mots dont le son /s/ en début de mot s\'écrit s-', words: ['sang', 'soin', 'spectacle', 'sauter', 'soulier', 'sujet', 'sauver', 'sourire', 'suivre', 'sentier', 'sourcil', 'surface', 'servir', 'spécial'] },
+    { n: 6, rule: 'Des mots contenant la lettre s faisant le son /z/', words: ['brise', 'église', 'raison', 'case', 'museau', 'télévision', 'chemise', 'pause', 'trésor', 'chose', 'plusieurs', 'vase', 'crise', 'pose', 'cuisinier', 'poser'] },
+    { n: 7, rule: 'Des mots contenant la lettre g faisant le son /j/ ou /gu/', words: ['âgé', 'gauche', 'glacé', 'bague', 'gens', 'gueule', 'changer', 'genre', 'langue', 'figure', 'genou', 'ongle', 'gant', 'gentil', 'regarder'] },
+    { n: 8, rule: 'Des mots contenant la lettre c faisant le son /s/', words: ['cinéma', 'glacier', 'musicien', 'demi-cercle', 'glaçon', 'océan', 'face', 'indice', 'pièce', 'facile', 'leçon', 'pouce', 'glace', 'morceau'] },
+    { n: 9, rule: 'Des mots contenant la lettre c faisant le son /k/', words: ['balcon', 'coin', 'écolier', 'boucle', 'costume', 'écorce', 'calme', 'costumer', 'rencontre', 'car', 'contre', 'vacances', 'clé', 'course', 'clou', 'cri'] },
+    { n: 10, rule: 'Des mots dont le son /t/ final s\'écrit -te', words: ['artiste', 'faute', 'perte', 'bête', 'injuste', 'plante', 'boîte', 'journaliste', 'sorte', 'côte', 'juste', 'suite', 'dentiste', 'liste', 'tarte'] },
+    { n: 11, rule: 'Des mots dont le son /j/ final s\'écrit -ge', words: ['âge', 'gorge', 'personnage', 'bagage', 'horloge', 'plage', 'beige', 'langage', 'sage', 'courage', 'ménage', 'voyage', 'garage', 'orage'] },
+    { n: 12, rule: 'Des mots se terminant par la lettre muette t', words: ['achat', 'bruit', 'enseignant', 'argent', 'but', 'point', 'art', 'chant', 'quart', 'autant', 'début', 'restaurant', 'bout', 'doigt', 'sport'] },
+    { n: 13, rule: 'Des mots se terminant par la lettre muette s', words: ['corps', 'dos', 'sans', 'cours', 'épais', 'tapis', 'dehors', 'mauvais', 'vers', 'débris', 'paradis', 'dedans', 'relais'] },
+    { n: 14, rule: 'Des mots se terminant par la lettre muette d', words: ['bavard', 'léopard', 'rond', 'blond', 'milliard', 'second', 'bord', 'regard', 'tard', 'd\'abord', 'renard', 'homard', 'retard'] },
+    { n: 15, rule: 'Des mots dont les lettres b et p sont précédées de la lettre m', words: ['ampoule', 'impossible', 'sembler', 'champ', 'important', 'sombre', 'compote', 'longtemps', 'temps', 'ensemble', 'nombre', 'tomber', 'exemple', 'ombre'] },
+    { n: 16, rule: 'Des adjectifs masculins dont plusieurs ont une lettre muette', words: ['brutal', 'frais', 'ouvert', 'court', 'lent', 'roux', 'droit', 'méchant', 'sportif', 'fou', 'mort', 'vivant'] },
+    { n: 17, rule: 'Les doubles lettres s entre deux voyelles qui font le son /s/', words: ['cassé', 'dépasser', 'poussin', 'casser', 'délaisser', 'réussir', 'casse-tête', 'glisser', 'ruisseau', 'chasse', 'laisser', 'chasser', 'possible'] },
+    { n: 18, rule: 'Des mots contenant le son /in/', words: ['après-demain', 'féminin', 'prochain', 'coquin', 'fin', 'vilain', 'demain', 'lendemain', 'voisin', 'divin', 'malin', 'faim', 'masculin'] },
+    { n: 19, rule: 'Des verbes infinitifs terminant en -er', words: ['avaler', 'marcher', 'terminer', 'crier', 'mener', 'toucher', 'écouter', 'monter', 'tirer', 'jeter', 'montrer', 'tuer', 'manquer', 'rencontrer'] },
+    { n: 20, rule: 'Des mots contenant une double consonne', words: ['appeler', 'frapper', 'mettre', 'battre', 'gomme', 'nourrir', 'débattre', 'goutte', 'nourriture', 'chiffre', 'guerre', 'tranquille', 'difficile', 'horrible'] },
+    { n: 21, rule: 'Des mots se terminant en -eur', words: ['acheteur', 'meilleur', 'spectateur', 'chasseur', 'patineur', 'visiteur', 'coureur', 'saveur', 'voleur', 'docteur', 'serveur', 'voyageur', 'horreur', 'skieur'] },
+    { n: 25, rule: 'Des noms féminins et masculins se terminant par -e, -é ou -ée', words: ['batterie', 'côté', 'poignée', 'bouchée', 'dictée', 'sortie', 'bougie', 'idée', 'vie', 'congé', 'marché', 'moitié', 'copie'] },
+    { n: 26, rule: 'Des mots se terminant par une consonne finale et sonore', words: ['bol', 'journal', 'recevoir', 'clair', 'lac', 'savoir', 'devoir', 'métal', 'valoir', 'film', 'pleuvoir', 'voir', 'hôpital', 'pouvoir', 'vouloir'] },
+    { n: 27, rule: 'Des verbes à l\'infinitif se terminant en -re', words: ['apprendre', 'entendre', 'rendre', 'attendre', 'joindre', 'répondre', 'comprendre', 'paraître', 'tendre', 'connaître', 'pondre', 'vivre', 'croire', 'prendre', 'décrire', 'rejoindre'] },
+    { n: 28, rule: 'Des adverbes se terminant en -ment', words: ['amoureusement', 'fortement', 'possiblement', 'calmement', 'justement', 'sagement', 'courageusement', 'lentement', 'timidement', 'follement', 'ouvertement'] },
+    { n: 29, rule: 'Des mots en lien avec les mathématiques', words: ['angle', 'droite', 'question', 'bande', 'environ', 'réponse', 'cent', 'ligne', 'cinquante', 'centaine', 'mille', 'soixante', 'combien', 'milliard', 'trente', 'demi', 'quarante', 'troisième'] },
+    { n: 30, rule: 'Des mots en lien avec le temps et la mesure', words: ['automne', 'heure', 'minute', 'centimètre', 'hiver', 'printemps', 'cycle', 'kilomètre', 'saison', 'décimètre', 'mètre', 'seconde', 'été', 'millimètre'] }
+  ];
+
+  // List 8's week starts Monday 2026-11-02 (test Friday 2026-11-06); list 9 the following
+  // Monday, etc. — one list per week, in order. Weeks before/after the transcribed range clamp
+  // to the nearest end rather than going out of bounds.
+  var FELIX_LIST8_MONDAY = new Date(2026, 10, 2);
+  function felixListForDate(now) {
+    now = now || new Date();
+    var monday = new Date(now);
+    var dow = monday.getDay();
+    monday.setHours(0, 0, 0, 0);
+    monday.setDate(monday.getDate() - ((dow + 6) % 7)); // back up to this week's Monday
+    var weeksSinceList8 = Math.round((monday - FELIX_LIST8_MONDAY) / (7 * 864e5));
+    var n = 8 + weeksSinceList8;
+    var available = felixWordLists.filter(function (l) { return l.n === n; })[0];
+    if (available) return available;
+    // n is out of the transcribed range (before list 1, in the 22-24 gap, or after list 30) —
+    // clamp to the nearest list we actually have rather than showing nothing.
+    var sorted = felixWordLists.slice().sort(function (a, b) { return a.n - b.n; });
+    if (n < sorted[0].n) return sorted[0];
+    for (var i = sorted.length - 1; i >= 0; i--) if (sorted[i].n <= n) return sorted[i];
+    return sorted[sorted.length - 1];
+  }
+  // This week's Friday test date (for display — "test ce vendredi").
+  function felixTestDate(now) {
+    now = now || new Date();
+    var d = new Date(now);
+    var dow = d.getDay();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + ((5 - dow + 7) % 7)); // forward to this week's Friday
+    return d;
+  }
 
   // ---------------------------------------------------------------- Clara: phonics by sound
   var claraPhonics = [
@@ -232,7 +280,9 @@ window.FAMILY = (function () {
     taskMenu: taskMenu,
     routine: routine,
     holidays: holidays,
-    felixSpelling: felixSpelling,
+    felixWordLists: felixWordLists,
+    felixListForDate: felixListForDate,
+    felixTestDate: felixTestDate,
     claraPhonics: claraPhonics,
     wordBank: wordBank,
     dayNumber: dayNumber,
