@@ -77,17 +77,15 @@ uninstall/reinstall and lose the frame's saved Home-app setting.
 
 Félix's school sends home a "Mes listes de mots" worksheet packet (Créations Carotine) — one
 numbered list of ~12-18 words per week, each with a Friday spelling test. `family-data.js`'s
-`felixWordLists` array holds every list transcribed from that PDF (currently Lists 1-21 and
-25-30 — **Lists 22-24 are missing**, a page in the source PDF was duplicated instead of
-containing them; add them to the array when the real pages are available, same `{ n, rule,
-words }` shape).
+`felixWordLists` array holds every list transcribed from that PDF: **Lists 1-30, complete**
+(same `{ n, rule, words }` shape per entry).
 
 `FAMILY.felixListForDate(now)` picks the right list for "this week" from a fixed anchor —
 `FELIX_LIST8_MONDAY = new Date(2026, 10, 2)` (the Monday that started List 8's week, test Friday
 2026-11-06) — counting whole weeks forward/back from there. If the computed list number falls
-outside the transcribed range (before List 1, in the 22-24 gap, or past List 30), it clamps to
-the nearest list that exists rather than showing nothing. `FAMILY.felixTestDate(now)` returns
-that week's Friday, for display ("Test vendredi 6").
+before List 1 or past List 30, it clamps to the nearest list that exists rather than showing
+nothing (worth revisiting once the real list sequence beyond 30 is known). `FAMILY.felixTestDate(now)`
+returns that week's Friday, for display ("Test vendredi 6").
 
 The quiz itself (`js/homework.js`'s `'quiz'` mode, used only by Félix) plays each word's audio
 automatically, Félix types it on an on-screen French keyboard (`KEY_ROWS` in homework.js — AZERTY
@@ -153,9 +151,8 @@ list once a day, every day until Friday, not just once.
   naive slugify of accented words can collide (e.g. "là"/"la", "où"/"ou", "sûr"/"sur" — the accent
   is lost in the slug). Always check for duplicate slug values before generating audio for a new
   word; append `-v2` to disambiguate if a collision is unavoidable. `CLIPS`/the audio folder
-  currently cover all 1365 words across `wordBank`/`claraPhonics`/`felixWordLists`. Adding new
-  words later (e.g. Félix's Lists 22-24 once available) means regenerating just the delta —
-  don't redo the whole set.
+  currently cover all 1383 words across `wordBank`/`claraPhonics`/`felixWordLists`. Adding new
+  words later means regenerating just the delta — don't redo the whole set.
 - **`scripts/gen-letter-audio.sh`** — generates the 26 French phonetic letter-sound clips
   (`public/audio/fr-letters/<letter>.mp3`) for Clara's letters-mode homework scrubber
   (`homework.js`). Phonetic sounds, not alphabet names: "beu" for B, "keu" for C, not "bé"/"cé".

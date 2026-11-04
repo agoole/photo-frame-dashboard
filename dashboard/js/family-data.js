@@ -42,8 +42,7 @@ window.FAMILY = (function () {
 
   // ---------------------------------------------------------------- Félix: real school spelling
   // lists (transcribed from his class's "Mes listes de mots" worksheets — Créations Carotine).
-  // One list per week, each with a Friday spelling test. List 22-24 are missing from the source
-  // PDF (a page was duplicated instead of containing them) — add them here when available.
+  // One list per week, each with a Friday spelling test. Lists 1-30 complete.
   var felixWordLists = [
     { n: 1, rule: 'Des mots utiles et fréquents', words: ['assez', 'bienvenu', 'rien', 'aujourd\'hui', 'dès', 'tant', 'aussitôt', 'maintenant', 'tantôt', 'bien', 'parce que', 'tôt', 'bientôt', 'plutôt'] },
     { n: 2, rule: 'Des mots utiles', words: ['bonhomme', 'cour', 'papier', 'bureau', 'femme', 'plan', 'cause', 'homme', 'prix', 'chacun', 'jumeau', 'tour', 'choix', 'métier'] },
@@ -66,6 +65,9 @@ window.FAMILY = (function () {
     { n: 19, rule: 'Des verbes infinitifs terminant en -er', words: ['avaler', 'marcher', 'terminer', 'crier', 'mener', 'toucher', 'écouter', 'monter', 'tirer', 'jeter', 'montrer', 'tuer', 'manquer', 'rencontrer'] },
     { n: 20, rule: 'Des mots contenant une double consonne', words: ['appeler', 'frapper', 'mettre', 'battre', 'gomme', 'nourrir', 'débattre', 'goutte', 'nourriture', 'chiffre', 'guerre', 'tranquille', 'difficile', 'horrible'] },
     { n: 21, rule: 'Des mots se terminant en -eur', words: ['acheteur', 'meilleur', 'spectateur', 'chasseur', 'patineur', 'visiteur', 'coureur', 'saveur', 'voleur', 'docteur', 'serveur', 'voyageur', 'horreur', 'skieur'] },
+    { n: 22, rule: 'Des verbes infinitifs terminant en -er', words: ['acheter', 'porter', 'soigner', 'cacher', 'préparer', 'trouver', 'continuer', 'présenter', 'visiter', 'coucher', 'sécher', 'voyager', 'gagner', 'secouer'] },
+    { n: 23, rule: 'Des noms se terminant en -eu et des adjectifs se terminant en -eux', words: ['adieu', 'enjeu', 'nombreux', 'amoureux', 'furieux', 'orageux', 'aveu', 'lieu', 'peureux', 'courageux', 'milieu', 'précieux'] },
+    { n: 24, rule: 'Des verbes infinitifs terminant en -ir', words: ['choisir', 'offrir', 'sentir', 'courir', 'ouvrir', 'servir', 'dormir', 'partir', 'sortir', 'finir', 'remplir', 'tenir', 'mourir', 'ressentir', 'venir'] },
     { n: 25, rule: 'Des noms féminins et masculins se terminant par -e, -é ou -ée', words: ['batterie', 'côté', 'poignée', 'bouchée', 'dictée', 'sortie', 'bougie', 'idée', 'vie', 'congé', 'marché', 'moitié', 'copie'] },
     { n: 26, rule: 'Des mots se terminant par une consonne finale et sonore', words: ['bol', 'journal', 'recevoir', 'clair', 'lac', 'savoir', 'devoir', 'métal', 'valoir', 'film', 'pleuvoir', 'voir', 'hôpital', 'pouvoir', 'vouloir'] },
     { n: 27, rule: 'Des verbes à l\'infinitif se terminant en -re', words: ['apprendre', 'entendre', 'rendre', 'attendre', 'joindre', 'répondre', 'comprendre', 'paraître', 'tendre', 'connaître', 'pondre', 'vivre', 'croire', 'prendre', 'décrire', 'rejoindre'] },

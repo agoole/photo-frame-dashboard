@@ -39,12 +39,22 @@ lives there permanently — never in a scratchpad.** See the warning at the top 
   like a real audio scrubber. "Réécouter" replays, "Suivant"/"Terminer" advances or closes.
 - **Adult views (Papa, Maman).** Shared `adult-view.js` builder: that parent's events today
   (including the garbage/recycling reminder when it applies to them).
+- **Félix's real spelling lists — all 30, complete.** Transcribed from his class's "Mes listes
+  de mots" worksheet PDF (Créations Carotine) into `FAMILY.felixWordLists` in `family-data.js` —
+  Lists 1-30, 422 total words (Lists 22-24 were initially missing from a duplicated PDF page;
+  the correct page was re-sent and added). `FAMILY.felixListForDate()` picks the current week's
+  list automatically (anchored: List 8's week started Monday 2026-11-02, test Friday
+  2026-11-06), clamping to List 1 or List 30 if ever asked for a date outside that range.
+  "Commencer les devoirs" for Félix is a real listen-and-type spelling quiz (`js/homework.js`'s
+  `'quiz'` mode): plays each word's audio, he types it on an on-screen French keyboard, optional
+  hint (first letter + count, doesn't affect score), right/wrong per word, final score screen
+  with missed words listed. Clara's existing letters-mode slider-scrub review is unchanged. See
+  `dashboard/CLAUDE.md`'s "Félix's real spelling lists" section for the full mechanism.
 - **Reading practice — pre-recorded audio, not TTS.** This WebView has no Web Speech API (see
   CLAUDE.md). `reading.js` plays `public/audio/fr/*.mp3` via `<audio>`. **Full audio set
-  generated**: all 1135 words across `wordBank`/`felixSpelling`/`claraPhonics` have a clip and a
-  `CLIPS` entry (expanded `wordBank` from 585 to 1135 unique words first, to match the original
-  ~987+ scope, then generated all 1105 missing clips in one batch via macOS `say -v Amélie` +
-  `ffmpeg`, zero failures).
+  generated**: all 1383 words across `wordBank`/`claraPhonics`/`felixWordLists` have a clip and a
+  `CLIPS` entry, generated in batches via macOS `say -v Amélie` + `ffmpeg` as the word lists
+  grew, zero failures throughout.
 - **"What to wear today" widget (`outfit.js`).** Reads live weather, draws a small cartoon
   Clara/Félix dressed for today's conditions (warm/mild/cold/snow/rain), pinned bottom-left of
   each kid's view.
@@ -77,19 +87,6 @@ lives there permanently — never in a scratchpad.** See the warning at the top 
 
 ## Known issues / next steps
 
-- **Félix's real spelling lists are in, Lists 22-24 are missing.** Transcribed from his class's
-  "Mes listes de mots" worksheet PDF (Créations Carotine) into `FAMILY.felixWordLists` in
-  `family-data.js` — Lists 1-21 and 25-30, 381 total words. Lists 22-24 are absent from the
-  source PDF (a page was duplicated instead of containing them) — re-send those pages when
-  available and add them to the array in the same `{ n, rule, words }` shape; the auto-clamping
-  in `felixListForDate()` means nothing breaks in the meantime, it just reuses the nearest list
-  it has once the real rotation reaches that gap (months away from today).
-- **"Commencer les devoirs" is now a real listen-and-type spelling quiz for Félix.** Plays each
-  word's audio, he types it on an on-screen French keyboard, optional hint (first letter + count,
-  doesn't affect score), right/wrong per word, final score screen with missed words listed. Picks
-  his current week's list automatically (anchored: List 8's week started Monday 2026-11-02, test
-  Friday 2026-11-06). Clara's existing letters-mode slider-scrub review is unchanged. See
-  `dashboard/CLAUDE.md`'s "Félix's real spelling lists" section for the full mechanism.
 - **No RTC battery — clock resets on every power loss.** Breaks anything date-relative. The
   manual fix command previously documented here was **wrong and set the clock 3-4 hours fast**
   — see the corrected command and the full explanation in `dashboard/CLAUDE.md`'s "No RTC
